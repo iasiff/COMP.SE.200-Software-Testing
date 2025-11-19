@@ -1,0 +1,26 @@
+name: Software testing CI
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests
+        run: npm test
+
+      - name: Coveralls
+        uses: coverallsapp/github-action@v2
+        with:
+          repo-token: ${{ secrets.COVERALLS_REPO_TOKEN }}
